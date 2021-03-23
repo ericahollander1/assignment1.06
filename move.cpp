@@ -44,8 +44,8 @@ void do_combat(dungeon_t *d, character_t *atk, character_t *def)
           (char*)"spleen",                  /* 22 */
           (char*)"ganglia",                 /* 23 */
           (char*)"ear",                     /* 24 */
-          (char*)"subcutaneous tissue"      /* 25 */
-                  (char*)"cerebellum",              /* 26 */ /* Brain parts begin here */
+          (char*)"subcutaneous tissue",      /* 25 */
+          (char*)"cerebellum",              /* 26 */ /* Brain parts begin here */
           (char*)"hippocampus",             /* 27 */
           (char*)"frontal lobe",            /* 28 */
           (char*)"brain",                   /* 29 */
