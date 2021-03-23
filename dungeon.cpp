@@ -518,9 +518,11 @@ static int empty_dungeon(dungeon_t *d)
   for (y = 0; y < DUNGEON_Y; y++) {
     for (x = 0; x < DUNGEON_X; x++) {
       mapxy(x, y) = ter_wall;
+      visiblemapxy(x,y)=ter_wall;
       if (y == 0 || y == DUNGEON_Y - 1 ||
           x == 0 || x == DUNGEON_X - 1) {
         mapxy(x, y) = ter_wall_immutable;
+        visiblemapxy(x, y) = ter_wall_immutable;
         hardnessxy(x, y) = 255;
       }
       charxy(x, y) = NULL;
@@ -628,47 +630,81 @@ int gen_dungeon(dungeon_t *d)
 
 void render_dungeon(dungeon_t *d)
 {
-  pair_t p;
+    pair_t p;
 
-  putchar('\n');
-  for (p[dim_y] = 0; p[dim_y] < DUNGEON_Y; p[dim_y]++) {
-    for (p[dim_x] = 0; p[dim_x] < DUNGEON_X; p[dim_x]++) {
-      if (charpair(p)) {
-        putchar(charpair(p)->symbol);
-      } else {
-        switch (mappair(p)) {
-        case ter_wall:
-        case ter_wall_immutable:
-          putchar(' ');
-          break;
-        case ter_floor:
-        case ter_floor_room:
-          putchar('.');
-          break;
-        case ter_floor_hall:
-          putchar('#');
-          break;
-        case ter_debug:
-          putchar('*');
-          fprintf(stderr, "Debug character at %d, %d\n", p[dim_y], p[dim_x]);
-          break;
-        case ter_stairs_up:
-          putchar('<');
-          break;
-        case ter_stairs_down:
-          putchar('>');
-          break;
-        default:
-          break;
+    putchar('\n');
+    for (p[dim_y] = 0; p[dim_y] < DUNGEON_Y; p[dim_y]++) {
+        for (p[dim_x] = 0; p[dim_x] < DUNGEON_X; p[dim_x]++) {
+            if(d->foggon) {
+                if (charpair(p) && visiblemappair(p)!= ter_wall && charpair(p) != d->pc.position) {//check if we can see when tunneling
+                    putchar(charpair(p)->symbol);
+                }
+                else {
+                    switch (visiblemappair(p)) {
+                        case ter_wall:
+                        case ter_wall_immutable:
+                            putchar(' ');
+                            break;
+                        case ter_floor:
+                        case ter_floor_room:
+                            putchar('.');
+                            break;
+                        case ter_floor_hall:
+                            putchar('#');
+                            break;
+                        case ter_debug:
+                            putchar('*');
+                            fprintf(stderr, "Debug character at %d, %d\n", p[dim_y], p[dim_x]);
+                            break;
+                        case ter_stairs_up:
+                            putchar('<');
+                            break;
+                        case ter_stairs_down:
+                            putchar('>');
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            else {
+                if (charpair(p)) {
+                    putchar(charpair(p)->symbol);
+                }
+                else {
+                    switch (mappair(p)) {
+                        case ter_wall:
+                        case ter_wall_immutable:
+                            putchar(' ');
+                            break;
+                        case ter_floor:
+                        case ter_floor_room:
+                            putchar('.');
+                            break;
+                        case ter_floor_hall:
+                            putchar('#');
+                            break;
+                        case ter_debug:
+                            putchar('*');
+                            fprintf(stderr, "Debug character at %d, %d\n", p[dim_y], p[dim_x]);
+                            break;
+                        case ter_stairs_up:
+                            putchar('<');
+                            break;
+                        case ter_stairs_down:
+                            putchar('>');
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         }
-      }
+        putchar('\n');
     }
     putchar('\n');
-  }
-  putchar('\n');
-  putchar('\n');
+    putchar('\n');
 }
-
 void delete_dungeon(dungeon_t *d)
 {
   free(d->rooms);
@@ -1251,7 +1287,17 @@ void render_tunnel_distance_map(dungeon_t *d)
     putchar('\n');
   }
 }
+void lookAround(dungeon_t *d){
+    d->visiblemap[d->pc.position[dim_y]][d->pc.position[dim_x+1]] = d->map[d->pc.position[dim_y]][d->pc.position[dim_x+1]];
+    d->visiblemap[d->pc.position[dim_y]][d->pc.position[dim_x-1]] = d->map[d->pc.position[dim_y]][d->pc.position[dim_x-1]];
+    d->visiblemap[d->pc.position[dim_y-1]][d->pc.position[dim_x+1]] = d->map[d->pc.position[dim_y-1]][d->pc.position[dim_x+1]];
+    d->visiblemap[d->pc.position[dim_y-1]][d->pc.position[dim_x-1]] = d->map[d->pc.position[dim_y-1]][d->pc.position[dim_x-1]];
+    d->visiblemap[d->pc.position[dim_y-1]][d->pc.position[dim_x]] = d->map[d->pc.position[dim_y-1]][d->pc.position[dim_x]];
+    d->visiblemap[d->pc.position[dim_y+1]][d->pc.position[dim_x+1]] = d->map[d->pc.position[dim_y+1]][d->pc.position[dim_x+1]];
+    d->visiblemap[d->pc.position[dim_y+1]][d->pc.position[dim_x-1]] = d->map[d->pc.position[dim_y+1]][d->pc.position[dim_x-1]];
+    d->visiblemap[d->pc.position[dim_y+1]][d->pc.position[dim_x]] = d->map[d->pc.position[dim_y+1]][d->pc.position[dim_x]];
 
+}
 void new_dungeon(dungeon_t *d)
 {
   uint32_t sequence_number;
@@ -1266,6 +1312,6 @@ void new_dungeon(dungeon_t *d)
 
   place_pc(d);
   d->character[d->pc.position[dim_y]][d->pc.position[dim_x]] = &d->pc;
-
+  lookAround(d);
   gen_monsters(d);
 }

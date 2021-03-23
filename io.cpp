@@ -503,6 +503,14 @@ void io_handle_input(dungeon_t *d)
       d->quit = 1;
       fail_code = 0;
       break;
+    case 'f' :
+       if(d->foggon){
+          d->foggon = 0;
+       }
+       else{
+          d->foggon = 1;
+       }
+       break;
     case 'T':
       /* New command.  Display the distances for tunnelers.             */
       io_display_tunnel(d);
