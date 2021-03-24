@@ -206,7 +206,7 @@ void io_display(dungeon_t *d)
     for (y = 0; y < 21; y++) {
         for (x = 0; x < 80; x++) {
             if(d->foggon){
-                if ((d->character[y][x] && visiblemapxy(x, y) != ter_wall) || (d->character[y][x]->pc)) {
+                if ((d->character[y][x] && visiblemapxy(x, y) != ter_wall)) {
                     mvaddch(y + 1, x, d->character[y][x]->symbol);
                 }
                  else {
@@ -549,6 +549,7 @@ void io_handle_input(dungeon_t *d)
            //printf("hello");
           d->foggon = 1;
        }
+       lookAround(d);
        io_display(d);
        break;
     case 'T':

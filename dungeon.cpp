@@ -1289,6 +1289,7 @@ void render_tunnel_distance_map(dungeon_t *d)
   }
 }
 void lookAround(dungeon_t *d){
+    d->visiblemap[d->pc.position[dim_y]][d->pc.position[dim_x]] = d->map[d->pc.position[dim_y]][d->pc.position[dim_x]];
     d->visiblemap[d->pc.position[dim_y]][d->pc.position[dim_x]+1] = d->map[d->pc.position[dim_y]][d->pc.position[dim_x]+1];
     d->visiblemap[d->pc.position[dim_y]][d->pc.position[dim_x]-1] = d->map[d->pc.position[dim_y]][d->pc.position[dim_x]-1];
     d->visiblemap[d->pc.position[dim_y]-1][d->pc.position[dim_x]+1] = d->map[d->pc.position[dim_y]-1][d->pc.position[dim_x]+1];
