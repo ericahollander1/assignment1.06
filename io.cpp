@@ -206,10 +206,10 @@ void io_display(dungeon_t *d)
     for (y = 0; y < 21; y++) {
         for (x = 0; x < 80; x++) {
             if(d->foggon){
-//                if (d->cursor.waiting && (uint32_t)d->cursor.position[dim_x] == x && (uint32_t)d->cursor.position[dim_y]==y) {
-//                    mvaddch(y + 1, x, '*');
-//                }
-                if ((d->character[y][x] && visiblemapxy(x, y) != ter_wall)) {
+                if (d->cursor.waiting && (uint32_t)d->cursor.position[dim_x] == x && (uint32_t)d->cursor.position[dim_y]==y) {
+                    mvaddch(y + 1, x, '*');
+                }
+                else if ((d->character[y][x] && visiblemapxy(x, y) != ter_wall)) {
                     mvaddch(y + 1, x, d->character[y][x]->symbol);
                 }
                  else {
@@ -242,10 +242,10 @@ void io_display(dungeon_t *d)
                 }
             }
             else{
-//                if (d->cursor.waiting && (uint32_t)d->cursor.position[dim_x] == x && (uint32_t)d->cursor.position[dim_y]==y) {
-//                    mvaddch(y + 1, x, '*');
-//                }
-                if (d->character[y][x]) {
+                if (d->cursor.waiting && (uint32_t)d->cursor.position[dim_x] == x && (uint32_t)d->cursor.position[dim_y]==y) {
+                    mvaddch(y + 1, x, '*');
+                }
+                else if (d->character[y][x]) {
                     mvaddch(y + 1, x, d->character[y][x]->symbol);
                 }
                 else {
@@ -344,90 +344,90 @@ uint32_t io_teleport_pcRANDOM(dungeon_t *d)
 
   return 0;
 }
-//uint32_t io_teleport_pc(dungeon_t *d)
-//{
-//    /* Just for fun. */
-//
-//    while (1) {
-//        switch (getch()) {
-//            case '7':
-//            case 'y':
-//            case KEY_HOME:
-//                move_cursor(d, 7);
-//                break;
-//            case '8':
-//            case 'k':
-//            case KEY_UP:
-//                move_cursor(d, 8);
-//                break;
-//            case '9':
-//            case 'u':
-//            case KEY_PPAGE:
-//                move_cursor(d, 9);
-//                break;
-//            case '6':
-//            case 'l':
-//            case KEY_RIGHT:
-//                move_cursor(d, 6);
-//                break;
-//            case '3':
-//            case 'n':
-//            case KEY_NPAGE:
-//                move_cursor(d, 3);
-//                break;
-//            case '2':
-//            case 'j':
-//            case KEY_DOWN:
-//                move_cursor(d, 2);
-//                break;
-//            case '1':
-//            case 'b':
-//            case KEY_END:
-//                move_cursor(d, 1);
-//                break;
-//            case '4':
-//            case 'h':
-//            case KEY_LEFT:
-//                move_cursor(d, 4);
-//                break;
-//            case '5':
-//            case ' ':
-//            case '.':
-//            case KEY_B2:
-//                break;
-//            case'g':
-//                d->cursor.waiting = 0;
-//                move_character(d, &d->pc, d->cursor.position);
-//                return 0;
-//            case'r':
-//                pair_t dest;
-//
-//                do {
-//                    dest[dim_x] = rand_range(1, DUNGEON_X - 2);
-//                    dest[dim_y] = rand_range(1, DUNGEON_Y - 2);
-//                } while (charpair(dest));
-//
-//                d->character[d->pc.position[dim_y]][d->pc.position[dim_x]] = NULL;
-//                d->character[dest[dim_y]][dest[dim_x]] = &d->pc;
-//                d->cursor.waiting = 0;
-//                d->pc.position[dim_y] = dest[dim_y];
-//                d->pc.position[dim_x] = dest[dim_x];
-//
-//                if (mappair(dest) < ter_floor) {
-//                    mappair(dest) = ter_floor;
-//                }
-//
-//                dijkstra(d);
-//                dijkstra_tunnel(d);
-//
-//                return 0;
-//
-//        }
-//
-//    }
-//
-//
-//}
+uint32_t io_teleport_pc(dungeon_t *d)
+{
+    /* lol his just for fun one is now RANDOM */
+
+    while (1) {
+        switch (getch()) {
+            case '7':
+            case 'y':
+            case KEY_HOME:
+                move_cursor(d, 7);
+                break;
+            case '8':
+            case 'k':
+            case KEY_UP:
+                move_cursor(d, 8);
+                break;
+            case '9':
+            case 'u':
+            case KEY_PPAGE:
+                move_cursor(d, 9);
+                break;
+            case '6':
+            case 'l':
+            case KEY_RIGHT:
+                move_cursor(d, 6);
+                break;
+            case '3':
+            case 'n':
+            case KEY_NPAGE:
+                move_cursor(d, 3);
+                break;
+            case '2':
+            case 'j':
+            case KEY_DOWN:
+                move_cursor(d, 2);
+                break;
+            case '1':
+            case 'b':
+            case KEY_END:
+                move_cursor(d, 1);
+                break;
+            case '4':
+            case 'h':
+            case KEY_LEFT:
+                move_cursor(d, 4);
+                break;
+            case '5':
+            case ' ':
+            case '.':
+            case KEY_B2:
+                break;
+            case'g':
+                d->cursor.waiting = 0;
+                move_character(d, &d->pc, d->cursor.position);
+                return 0;
+            case'r':
+                pair_t dest;
+
+                do {
+                    dest[dim_x] = rand_range(1, DUNGEON_X - 2);
+                    dest[dim_y] = rand_range(1, DUNGEON_Y - 2);
+                } while (charpair(dest));
+
+                d->character[d->pc.position[dim_y]][d->pc.position[dim_x]] = NULL;
+                d->character[dest[dim_y]][dest[dim_x]] = &d->pc;
+                d->cursor.waiting = 0;
+                d->pc.position[dim_y] = dest[dim_y];
+                d->pc.position[dim_x] = dest[dim_x];
+
+                if (mappair(dest) < ter_floor) {
+                    mappair(dest) = ter_floor;
+                }
+
+                dijkstra(d);
+                dijkstra_tunnel(d);
+
+                return 0;
+
+        }
+
+    }
+
+
+}
 /* Adjectives to describe our monsters */
 static const char *adjectives[] = {
   "A menacing ",
