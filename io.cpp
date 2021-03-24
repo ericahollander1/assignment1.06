@@ -206,9 +206,10 @@ void io_display(dungeon_t *d)
     for (y = 0; y < 21; y++) {
         for (x = 0; x < 80; x++) {
             if(d->foggon){
-                if (d->character[y][x] && visiblemapxy(x, y) != ter_wall) {
+                if ((d->character[y][x] && visiblemapxy(x, y) != ter_wall) || (d->character[y][x]->pc)) {
                     mvaddch(y + 1, x, d->character[y][x]->symbol);
-                } else {
+                }
+                 else {
                     switch (visiblemapxy(x, y)) {
                         case ter_wall:
                         case ter_wall_immutable:
@@ -545,9 +546,10 @@ void io_handle_input(dungeon_t *d)
           d->foggon = 0;
        }
        else{
-           printf("hello");
+           //printf("hello");
           d->foggon = 1;
        }
+       io_display(d);
        break;
     case 'T':
       /* New command.  Display the distances for tunnelers.             */
