@@ -206,7 +206,7 @@ void io_display(dungeon_t *d)
     for (y = 0; y < 21; y++) {
         for (x = 0; x < 80; x++) {
             if(d->foggon){
-                if (d->cursor.waiting && d->cursor.position[dim_x] == x && d->cursor.position[dim_y]==y) {
+                if (d->cursor.waiting && (uint32_t)d->cursor.position[dim_x] == x && (uint32_t)d->cursor.position[dim_y]==y) {
                     mvaddch(y + 1, x, '*');
                 }
                 else if ((d->character[y][x] && visiblemapxy(x, y) != ter_wall) || (d->character[y][x]->pc)) {
@@ -242,7 +242,7 @@ void io_display(dungeon_t *d)
                 }
             }
             else{
-                if (d->cursor.waiting && d->cursor.position[dim_x] == x && d->cursor.position[dim_y]==y) {
+                if (d->cursor.waiting && (uint32_t)d->cursor.position[dim_x] == x && (uint32_t)d->cursor.position[dim_y]==y) {
                     mvaddch(y + 1, x, '*');
                 }
                 else if (d->character[y][x]) {
