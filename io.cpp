@@ -504,10 +504,12 @@ void io_handle_input(dungeon_t *d)
       fail_code = 0;
       break;
     case 'f' :
+
        if(d->foggon){
           d->foggon = 0;
        }
        else{
+           printf("hello");
           d->foggon = 1;
        }
        break;
