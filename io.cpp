@@ -635,10 +635,12 @@ void io_handle_input(dungeon_t *d)
 
        if(d->foggon){
           d->foggon = 0;
+          fail_code = 0;
        }
        else{
            //printf("hello");
           d->foggon = 1;
+          fail_code =1;
        }
        lookAround(d);
        io_display(d);
