@@ -48,7 +48,10 @@ typedef struct room {
     pair_t position;
     pair_t size;
 } room_t;
-
+typedef struct cursor{
+    pair_t position;
+    uint32_t waiting;
+}cursor_t;
 typedef struct dungeon {
     uint32_t num_rooms;
     room_t *rooms;
@@ -80,7 +83,7 @@ typedef struct dungeon {
     uint32_t is_new;
     uint32_t quit;
     uint32_t foggon;
-    uint32_t waiting;
+    cursor_t cursor;
 } dungeon_t;
 
 void init_dungeon(dungeon_t *d);

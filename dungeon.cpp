@@ -373,7 +373,7 @@ static int smooth_hardness(dungeon_t *d)
     if (i == 1) {
       head = tail = (queue_node_t*) malloc(sizeof (*tail));
     } else {
-      tail->next = (queue_node_t*)malloc(sizeof (*tail));
+      tail->next = (queue_node_t*) malloc(sizeof (*tail));
       tail = tail->next;
     }
     tail->next = NULL;
@@ -1289,7 +1289,6 @@ void render_tunnel_distance_map(dungeon_t *d)
   }
 }
 void lookAround(dungeon_t *d){
-    d->visiblemap[d->pc.position[dim_y]][d->pc.position[dim_x]] = d->map[d->pc.position[dim_y]][d->pc.position[dim_x]];
     d->visiblemap[d->pc.position[dim_y]][d->pc.position[dim_x]+1] = d->map[d->pc.position[dim_y]][d->pc.position[dim_x]+1];
     d->visiblemap[d->pc.position[dim_y]][d->pc.position[dim_x]-1] = d->map[d->pc.position[dim_y]][d->pc.position[dim_x]-1];
     d->visiblemap[d->pc.position[dim_y]-1][d->pc.position[dim_x]+1] = d->map[d->pc.position[dim_y]-1][d->pc.position[dim_x]+1];
@@ -1298,7 +1297,7 @@ void lookAround(dungeon_t *d){
     d->visiblemap[d->pc.position[dim_y]+1][d->pc.position[dim_x]+1] = d->map[d->pc.position[dim_y]+1][d->pc.position[dim_x]+1];
     d->visiblemap[d->pc.position[dim_y]+1][d->pc.position[dim_x]-1] = d->map[d->pc.position[dim_y]+1][d->pc.position[dim_x]-1];
     d->visiblemap[d->pc.position[dim_y]+1][d->pc.position[dim_x]] = d->map[d->pc.position[dim_y]+1][d->pc.position[dim_x]];
-
+    d->visiblemap[d->pc.position[dim_y]][d->pc.position[dim_x]] = d->map[d->pc.position[dim_y]][d->pc.position[dim_x]];
 }
 
 void new_dungeon(dungeon_t *d)
