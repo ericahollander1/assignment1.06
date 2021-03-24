@@ -209,7 +209,7 @@ void io_display(dungeon_t *d)
 //                if (d->cursor.waiting && (uint32_t)d->cursor.position[dim_x] == x && (uint32_t)d->cursor.position[dim_y]==y) {
 //                    mvaddch(y + 1, x, '*');
 //                }
-                if ((d->character[y][x] && visiblemapxy(x, y) != ter_wall) || (d->character[y][x]->pc)) {
+                if ((d->character[y][x] && visiblemapxy(x, y) != ter_wall)) {
                     mvaddch(y + 1, x, d->character[y][x]->symbol);
                 }
                  else {
@@ -425,9 +425,9 @@ uint32_t io_teleport_pcRANDOM(dungeon_t *d)
 //        }
 //
 //    }
-
-
-}
+//
+//
+//}
 /* Adjectives to describe our monsters */
 static const char *adjectives[] = {
   "A menacing ",
@@ -671,7 +671,7 @@ void io_handle_input(dungeon_t *d)
       break;
     case 'g':
       /* Teleport the PC to a random place in the dungeon.              */
-      io_teleport_pc(d);
+      io_teleport_pcRANDOM(d);
       fail_code = 0;
       break;
     case 'm':
