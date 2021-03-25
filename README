@@ -1,0 +1,23 @@
+Collaborators/Group Members:
+Erica Hollander: Elh1 and Lakin Jenkins: ljenkins
+
+Title: HW 1.06
+
+Description:
+This program is the 6th step in creating a rouge like game. This section was specifically 
+to add more functions to the program. This included adding "fog" and teleportation. In 
+order to use the fog functionality all you have to do is press the f button and then the 
+screen will be covered in fog and you'll only be able to see the blocks around you. as you 
+move around youll be able to also see the past locations as you remember them. To use the 
+teleport function you will have to press the g button and then you can either move randomly 
+with the button r or you can move the cursor. You move the cursor using the same buttons one 
+would use for moving the pc however you can teleport outside of the walls. Then when the 
+cursor is in the spot you wish to teleport then you press g again and that will place you in 
+that position and if you land on another character the fighting sequence will occur. This 
+section of the project was also used to switch from c to c++. 
+
+ 
+ 
+Technologies used:
+ We used CLion to write in C++. For the final test we used Ubuntu to see it on 
+ the console. The two txt files were both done on Eclipse.
